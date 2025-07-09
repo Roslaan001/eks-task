@@ -7,9 +7,9 @@ pipeline {
     }
     environment {
         ECR_REPO_URL = '381492075201.dkr.ecr.us-east-1.amazonaws.com'
-        IMAGE_REPO = "381492075201.dkr.ecr.us-east-1.amazonaws.com/java-maven-app:latest"
+        IMAGE_REPO = "381492075201.dkr.ecr.us-east-1.amazonaws.com/java-maven-app"
         IMAGE_NAME = "1.0-${BUILD_NUMBER}"
-        CLUSTER_NAME = "eks-cluster-test"
+        CLUSTER_NAME = "eks-cluster-task"
         CLUSTER_REGION = "us-east-1"
         AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
         AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
@@ -52,9 +52,9 @@ pipeline {
                     env.DB_ROOT_PASS = sh(script: 'echo -n $DB_ROOT_PASS_SECRET | base64', returnStdout: true).trim()
                     
                     echo 'deploying new release to EKS...'
-                    sh 'envsubst < k8s-deployment/java-app-cicd.yaml | kubectl apply -f -'
-                    sh 'envsubst < k8s-deployment/db-config-cicd.yaml | kubectl apply -f -'
-                    sh 'envsubst < k8s-deployment/db-secret-cicd.yaml | kubectl apply -f -'
+                    sh 'envsubst < k8s-deployment/java-deployment.yaml | kubectl apply -f -'
+                    sh 'envsubst < k8s-deployment/mysql-configmap.yaml | kubectl apply -f -'
+                    sh 'envsubst < k8s-deployment/mysql-secret.yaml | kubectl apply -f -'
                 }
             }
         }
