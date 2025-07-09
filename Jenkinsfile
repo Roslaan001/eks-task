@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
         ECR_REPO_URL = '381492075201.dkr.ecr.us-east-1.amazonaws.com'
-        IMAGE_REPO = "381492075201.dkr.ecr.us-east-1.amazonaws.com/java-app"
+        IMAGE_REPO = "381492075201.dkr.ecr.us-east-1.amazonaws.com/java-maven-app:latest"
         IMAGE_NAME = "1.0-${BUILD_NUMBER}"
         CLUSTER_NAME = "eks-cluster-test"
         CLUSTER_REGION = "us-east-1"
